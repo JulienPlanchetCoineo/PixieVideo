@@ -20,6 +20,7 @@ import {BreakpointsService} from '../../../common/core/ui/breakpoints.service';
 import {ControlPosition} from '../enums/control-positions.enum';
 import {ResizeState} from '../../image-editor-ui/state/resize/resize.state';
 import {CropState} from '../../image-editor-ui/state/crop/crop.state';
+import {VideoState} from '../../image-editor-ui/state/video/video.state';
 import {ShapesState} from '../../image-editor-ui/state/shapes/shapes.state';
 import {TransformState} from '../../image-editor-ui/state/transform/transform.state';
 import {FrameState} from '../../image-editor-ui/state/frame/frame.state';
@@ -73,7 +74,8 @@ interface EditorStateModel {
         FrameState,
         CornersState,
         BackgroundState,
-        ObjectsState
+        ObjectsState,
+        VideoState
     ],
 })
 export class EditorState implements NgxsOnInit {

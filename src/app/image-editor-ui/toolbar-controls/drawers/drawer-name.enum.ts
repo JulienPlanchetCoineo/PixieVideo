@@ -12,5 +12,6 @@ export enum DrawerName {
     CORNERS = 'corners',
     BACKGROUND = 'background',
     MERGE = 'merge',
+    VIDEO = 'video',
     OBJECT_SETTINGS = 'objectSettings',
 }
