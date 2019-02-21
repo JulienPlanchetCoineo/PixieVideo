@@ -10,7 +10,7 @@ import {WatermarkToolService} from '../watermark-tool.service';
 import {Toast} from 'common/core/ui/toast.service';
 import {ucFirst} from '../../../../common/core/utils/uc-first';
 
-type ValidFormats = 'png'|'jpeg'|'json';
+type ValidFormats = 'png'|'jpeg'|'json'|'mp4';
 
 @Injectable()
 export class ExportToolService {
@@ -68,6 +68,8 @@ export class ExportToolService {
 
             if (format === 'json') {
                 blob = new Blob([data], {type: 'application/json'});
+            } else if (format === 'mp4') {
+
             } else {
                 const contentType = 'image/' + format;
                 data = data.replace(/data:image\/([a-z]*)?;base64,/, '');

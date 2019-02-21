@@ -123,7 +123,7 @@ export interface PixieConfig {
             maxFileSize?: number; // in bytes
         },
         export?: {
-            defaultFormat: 'png'|'jpeg'|'json',
+            defaultFormat: 'png'|'jpeg'|'json'|'mp4',
             defaultQuality: number,
             defaultName: string,
         },
