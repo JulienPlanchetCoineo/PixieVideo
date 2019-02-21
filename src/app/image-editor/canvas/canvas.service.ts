@@ -189,4 +189,63 @@ export class CanvasService {
         return this.state.fabric.getObjects()
             .find(obj => obj.name === ObjectNames.mainImage.name) as FImage;
     }
+
+    /**
+     * Open image at given url in canvas.
+     */
+    public openVideo(url): Promise<Image> {
+        return new Promise(resolve => {
+            function getVideoElement(url) {
+                var videoE = document.createElement('video');
+                videoE.width = 530;
+                videoE.height = 298;
+                videoE.muted = true;
+                videoE.crossOrigin = "anonymous";
+                videoE.loop = true;
+                var source = document.createElement('source');
+                source.src = url;
+                source.type = 'video/mp4';
+                videoE.appendChild(source);
+                return videoE;
+            }
+            var canvas = new fabric.Canvas('c');
+            
+            var $this = this;
+            var videoE = getVideoElement(url);
+            var object = new fabric.Image(videoE, {left: 0,   top: 0});
+            object.getElement().play();
+            fabric.util.requestAnimFrame(function render() {
+                $this.render();
+                fabric.util.requestAnimFrame(render);
+            });
+
+//                const object = new fabric.Image(image);
+            object.name = ObjectNames.image.name;
+
+            // use either main image or canvas dimensions as outter boundaries for scaling new image
+            const maxWidth  = this.state.original.width,
+                maxHeight = this.state.original.height;
+
+            // if image is wider or higher then the current canvas, we'll scale it down
+            if (object.width >= maxWidth || object.height >= maxHeight) {
+
+                // calc new image dimensions (main image height - 10% and width - 10%)
+                const newWidth  = maxWidth - (0.1 * maxWidth),
+                    newHeight = maxHeight - (0.1 * maxHeight),
+                    scale     = 1 / (Math.min(newHeight / object.getScaledHeight(), newWidth / object.getScaledWidth()));
+
+                // scale newly uploaded image to the above dimensions
+                object.scaleX = object.scaleX * (1 / scale);
+                object.scaleY = object.scaleY * (1 / scale);
+            }
+
+            // center and render newly uploaded image on the canvas
+            this.state.fabric.add(object);
+            object.viewportCenter();
+            object.setCoords();
+            this.render();
+            this.zoom.fitToScreen();
+            resolve(object);
+        });
+    }
 }

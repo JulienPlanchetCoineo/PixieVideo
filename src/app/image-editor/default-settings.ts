@@ -270,7 +270,7 @@ export const DEFAULT_CONFIG: PixieConfig  = {
             items: defaultStickers,
         },
         import: {
-            validExtensions: ['png', 'jpg', 'jpeg', 'svg', 'json', 'gif'],
+            validExtensions: ['png', 'jpg', 'jpeg', 'svg', 'json', 'gif', 'mp4', 'ogv'],
         },
         export: {
             defaultFormat: 'png',

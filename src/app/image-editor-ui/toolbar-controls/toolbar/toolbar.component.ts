@@ -82,6 +82,15 @@ export class ToolbarComponent implements AfterViewInit {
     }
 
     /**
+     * Ask user to upload a new background image and override current one.
+     */
+    public openBackgroundVideo() {
+        this.importTool.openUploadDialog({type: 'video', backgroundImage: true}).then(() => {
+            this.history.add(HistoryNames.BG_VIDEO);
+        });
+    }
+
+    /**
      * Ask user to upload a new overlay image and add it to canvas.
      */
     public openOverlayImage() {
@@ -89,6 +98,17 @@ export class ToolbarComponent implements AfterViewInit {
             if ( ! obj) return;
             this.canvas.fabric().setActiveObject(obj);
             this.history.add(HistoryNames.OVERLAY_IMAGE);
+        });
+    }
+
+    /**
+     * Ask user to upload a new overlay video and add it to canvas.
+     */
+    public openOverlayVideo() {
+        this.importTool.openUploadDialog({type: 'video'}).then(obj => {
+            if ( ! obj) return;
+            this.canvas.fabric().setActiveObject(obj);
+            this.history.add(HistoryNames.OVERLAY_VIDEO);
         });
     }
 

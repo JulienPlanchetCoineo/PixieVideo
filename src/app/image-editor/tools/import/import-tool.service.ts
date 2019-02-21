@@ -26,7 +26,7 @@ export class ImportToolService {
     /**
      * Open upload dialog, import selected file and open it in editor.
      */
-    public openUploadDialog(options: {type?: 'image'|'state', backgroundImage?: boolean} = {type: 'image'}): Promise<any> {
+    public openUploadDialog(options: {type?: 'image'|'state'|'video', backgroundImage?: boolean} = {type: 'image'}): Promise<any> {
         const accept = this.getUploadAcceptString(options.type);
 
         return new Promise(resolve => {
@@ -103,6 +103,9 @@ export class ImportToolService {
 
         if (extension === 'json') {
             return this.openStateFile(data);
+        } else if (extension === 'mp4'
+                || extension === 'ogv') {
+            return this.canvas.openVideo(data);
         } else {
             return this.canvas.openImage(data);
         }
@@ -137,10 +140,12 @@ export class ImportToolService {
         });
     }
 
-    private getUploadAcceptString(type: 'image'|'state'|'all' = 'all'): string[] {
+    private getUploadAcceptString(type: 'image'|'video'|'state'|'all' = 'all'): string[] {
         switch (type) {
             case 'image':
                 return ['image/*'];
+            case 'video':
+                return ['video/*'];
             case 'state':
                 return ['.json', 'application/json'];
             case 'all':
