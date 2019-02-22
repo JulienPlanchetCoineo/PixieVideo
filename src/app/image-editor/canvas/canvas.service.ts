@@ -197,8 +197,7 @@ export class CanvasService {
         return new Promise(resolve => {
             function getVideoElement(url) {
                 var videoE = document.createElement('video');
-                videoE.width = 530;
-                videoE.height = 298;
+                console.log(videoE);
                 videoE.muted = true;
                 videoE.crossOrigin = "anonymous";
                 videoE.loop = true;
@@ -212,40 +211,48 @@ export class CanvasService {
             
             var $this = this;
             var videoE = getVideoElement(url);
-            var object = new fabric.Image(videoE, {left: 0,   top: 0});
-            object.getElement().play();
-            fabric.util.requestAnimFrame(function render() {
-                $this.render();
-                fabric.util.requestAnimFrame(render);
+            videoE.addEventListener("loadedmetadata", e => {
+                videoE.width = videoE.videoWidth;
+                videoE.height = videoE.videoHeight;
+
+                console.log("videoE", videoE.width, videoE.height);
+                console.log("videoE", videoE.videoWidth, videoE.videoHeight);
+                
+                var object = new fabric.Image(videoE, {left: 0,   top: 0});
+                object.getElement().play();
+                fabric.util.requestAnimFrame(function render() {
+                    $this.render();
+                    fabric.util.requestAnimFrame(render);
+                });
+
+//              const object = new fabric.Image(image);
+                object.name = ObjectNames.image.name;
+
+                // use either main image or canvas dimensions as outter boundaries for scaling new image
+                const maxWidth  = this.state.original.width,
+                    maxHeight = this.state.original.height;
+
+                // if image is wider or higher then the current canvas, we'll scale it down
+                if (object.width >= maxWidth || object.height >= maxHeight) {
+
+                    // calc new image dimensions (main image height - 10% and width - 10%)
+                    const newWidth  = maxWidth - (0.1 * maxWidth),
+                        newHeight = maxHeight - (0.1 * maxHeight),
+                        scale     = 1 / (Math.min(newHeight / object.getScaledHeight(), newWidth / object.getScaledWidth()));
+
+                    // scale newly uploaded image to the above dimensions
+                    object.scaleX = object.scaleX * (1 / scale);
+                    object.scaleY = object.scaleY * (1 / scale);
+                }
+
+                // center and render newly uploaded image on the canvas
+                this.state.fabric.add(object);
+                object.viewportCenter();
+                object.setCoords();
+                this.render();
+                this.zoom.fitToScreen();
+                resolve(object);
             });
-
-//                const object = new fabric.Image(image);
-            object.name = ObjectNames.image.name;
-
-            // use either main image or canvas dimensions as outter boundaries for scaling new image
-            const maxWidth  = this.state.original.width,
-                maxHeight = this.state.original.height;
-
-            // if image is wider or higher then the current canvas, we'll scale it down
-            if (object.width >= maxWidth || object.height >= maxHeight) {
-
-                // calc new image dimensions (main image height - 10% and width - 10%)
-                const newWidth  = maxWidth - (0.1 * maxWidth),
-                    newHeight = maxHeight - (0.1 * maxHeight),
-                    scale     = 1 / (Math.min(newHeight / object.getScaledHeight(), newWidth / object.getScaledWidth()));
-
-                // scale newly uploaded image to the above dimensions
-                object.scaleX = object.scaleX * (1 / scale);
-                object.scaleY = object.scaleY * (1 / scale);
-            }
-
-            // center and render newly uploaded image on the canvas
-            this.state.fabric.add(object);
-            object.viewportCenter();
-            object.setCoords();
-            this.render();
-            this.zoom.fitToScreen();
-            resolve(object);
         });
     }
 }

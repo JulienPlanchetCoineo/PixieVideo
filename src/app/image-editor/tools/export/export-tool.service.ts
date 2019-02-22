@@ -9,6 +9,7 @@ import {HttpClient} from '@angular/common/http';
 import {WatermarkToolService} from '../watermark-tool.service';
 import {Toast} from 'common/core/ui/toast.service';
 import {ucFirst} from '../../../../common/core/utils/uc-first';
+//import CCapture from 'ccapture.js';
 
 type ValidFormats = 'png'|'jpeg'|'json'|'mp4';
 
@@ -42,6 +43,11 @@ export class ExportToolService {
 
         if (format === 'json') {
             data = this.getJsonState();
+        } if (format === 'mp4') {
+            this.getCanvasVideo().then(blob => {
+                saveAs(blob, filename);
+            });
+            return;
         } else {
             data = this.getDataUrl(format, quality);
         }
@@ -62,14 +68,41 @@ export class ExportToolService {
         }
     }
 
+    private getCanvasVideo(): Promise<Blob> {
+        return new Promise(resolve => {
+            
+            console.log("getCanvasVideo");
+
+            /*var capturer = new CCapture( {
+                format: 'webm',
+                framerate: 60,
+                verbose: true} );
+            
+            capturer.start();
+
+            function render(){
+                requestAnimationFrame(render);
+                capturer.capture( this.canvas );
+            }
+            
+            render();
+
+            setTimeout(() => {
+                console.log("timeout complete");
+                capturer.stop();
+                capturer.save( function( blob ) {
+                    resolve();
+                } );
+            }, 5000);*/
+        });
+    }
+
     private getCanvasBlob(format: ValidFormats, data: string): Promise<Blob> {
         return new Promise(resolve => {
             let blob;
 
             if (format === 'json') {
                 blob = new Blob([data], {type: 'application/json'});
-            } else if (format === 'mp4') {
-
             } else {
                 const contentType = 'image/' + format;
                 data = data.replace(/data:image\/([a-z]*)?;base64,/, '');
