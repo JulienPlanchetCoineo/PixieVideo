@@ -195,9 +195,8 @@ export class CanvasService {
      */
     public openVideo(url): Promise<Image> {
         return new Promise(resolve => {
-            function getVideoElement(url) {
+            const getVideoElement = (url) => {
                 var videoE = document.createElement('video');
-                console.log(videoE);
                 videoE.muted = true;
                 videoE.crossOrigin = "anonymous";
                 videoE.loop = true;
@@ -215,11 +214,10 @@ export class CanvasService {
                 videoE.width = videoE.videoWidth;
                 videoE.height = videoE.videoHeight;
 
-                console.log("videoE", videoE.width, videoE.height);
-                console.log("videoE", videoE.videoWidth, videoE.videoHeight);
-                
-                var object = new fabric.Image(videoE, {left: 0,   top: 0});
-                object.getElement().play();
+                var object = new fabric.Image(<HTMLImageElement><unknown>videoE, {left: 0,   top: 0});
+                (<HTMLVideoElement><unknown>object.getElement()).play();
+//                var object = new fabric.Image(videoE, {left: 0,   top: 0});
+//                object.getElement().play();
                 fabric.util.requestAnimFrame(function render() {
                     $this.render();
                     fabric.util.requestAnimFrame(render);

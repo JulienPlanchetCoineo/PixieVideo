@@ -9,7 +9,10 @@ import {HttpClient} from '@angular/common/http';
 import {WatermarkToolService} from '../watermark-tool.service';
 import {Toast} from 'common/core/ui/toast.service';
 import {ucFirst} from '../../../../common/core/utils/uc-first';
-//import CCapture from 'ccapture.js';
+
+//import { WebMWriter } from 'ccapture.js/src/webm-writer-0.2.0.js';
+//import CCapture from 'ccapture.js/build/CCapture.all.min.js';
+import WebMWriter from 'webm-writer';
 
 type ValidFormats = 'png'|'jpeg'|'json'|'mp4';
 
@@ -73,6 +76,32 @@ export class ExportToolService {
             
             console.log("getCanvasVideo");
 
+            var videoWriter = new WebMWriter({
+                quality: 0.95,    // WebM image quality from 0.0 (worst) to 1.0 (best)
+                fd: null,         // Node.js file descriptor to write to instead of buffering to memory (optional)
+            
+                // You must supply one of:
+                frameDuration: 3, // Duration of frames in milliseconds
+                frameRate: 5,     // Number of frames per second
+            });
+
+            
+            const render = () => {
+                if (videoWriter) {
+                    requestAnimationFrame(render);
+                    videoWriter.addFrame(this.canvas.state.fabric);
+                }
+            }
+            
+            render();
+
+            setTimeout(() => {
+                console.log("timeout complete");
+                videoWriter.complete().then(function(webMBlob) {
+                    videoWriter = null;
+                    resolve(webMBlob);
+                });
+            }, 5000);
             /*var capturer = new CCapture( {
                 format: 'webm',
                 framerate: 60,
