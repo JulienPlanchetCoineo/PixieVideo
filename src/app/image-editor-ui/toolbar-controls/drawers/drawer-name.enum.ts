@@ -13,5 +13,6 @@ export enum DrawerName {
     BACKGROUND = 'background',
     MERGE = 'merge',
     OBJECT_SETTINGS = 'objectSettings',
-    OBJECT_ANIMATIONS = 'objectAnimations'
+    OBJECT_ANIMATIONS = 'objectAnimations',
+    ANIMATION = 'animation',
 }

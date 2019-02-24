@@ -24,6 +24,7 @@ import {ColorControlsDrawerComponent} from './color-controls-drawer/color-contro
 import {TextureControlsDrawerComponent} from './drawers/texture-controls-drawer/texture-controls-drawer.component';
 import {OutlineControlsDrawerComponent} from './outline-controls-drawer/outline-controls-drawer.component';
 import {GradientControlsDrawerComponent} from './drawers/gradient-controls-drawer/gradient-controls-drawer.component';
+import {AnimationControlsDrawerComponent} from './drawers/animation-controls-drawer/animation-controls-drawer.component';
 import {FilterControlsComponent} from './drawers/filter-controls/filter-controls.component';
 import {RoundDrawerComponent} from './drawers/round-drawer/round-drawer.component';
 import {FrameDrawerComponent} from './drawers/frame-drawer/frame-drawer.component';
@@ -86,6 +87,7 @@ import { TextFontSelectorComponent } from './widgets/text-font-selector/text-fon
         OutlineControlsDrawerComponent,
         TextureControlsDrawerComponent,
         GradientControlsDrawerComponent,
+        AnimationControlsDrawerComponent,
         FilterControlsComponent,
         RoundDrawerComponent,
         FrameDrawerComponent,
@@ -113,6 +115,7 @@ import { TextFontSelectorComponent } from './widgets/text-font-selector/text-fon
         OutlineControlsDrawerComponent,
         TextureControlsDrawerComponent,
         GradientControlsDrawerComponent,
+        AnimationControlsDrawerComponent,
         FilterControlsComponent,
         RoundDrawerComponent,
         FrameDrawerComponent,

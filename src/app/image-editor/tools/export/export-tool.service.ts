@@ -106,7 +106,7 @@ export class ExportToolService {
             }
             
             render();
-            var timer = setInterval(render, 1000 / frameRate);
+            var timer = setInterval(render, 1000.0 / frameRate);
 
             setTimeout(() => {
                 videoWriter.complete().then((webMBlob) => {

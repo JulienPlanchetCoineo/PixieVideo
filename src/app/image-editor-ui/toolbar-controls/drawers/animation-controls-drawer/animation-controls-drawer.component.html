@@ -1,0 +1,6 @@
+<div class="animation button-with-image"
+     *ngFor="let animation of defaultAnimation; index as index;"
+     (click)="fillWithPattern(index)">
+    <div class="bg-image" [style.background-image]="getAnimationBgStyle(index)"></div>
+    <label>{{ animation }}</label>
+</div>
