@@ -16,9 +16,12 @@
             <mat-icon svgIcon="delete-custom"></mat-icon>
         </button>
 
-
         <button mat-icon-button (click)="openObjSettingsPanel()" [disabled]="dirty$ | async" [matTooltip]="'Customize' | trans">
             <mat-icon svgIcon="settings-custom"></mat-icon>
+        </button>
+
+        <button mat-icon-button (click)="openAnimationPanel()" [matTooltip]="'Animation' | trans">
+            <mat-icon svgIcon="videocam"></mat-icon>
         </button>
     </ng-container>
 </div>

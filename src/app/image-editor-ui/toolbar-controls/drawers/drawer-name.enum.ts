@@ -14,4 +14,5 @@ export enum DrawerName {
     MERGE = 'merge',
     VIDEO = 'video',
     OBJECT_SETTINGS = 'objectSettings',
+    OBJECT_ANIMATIONS = 'objectAnimations'
 }
