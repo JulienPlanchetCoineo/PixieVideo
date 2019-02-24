@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {fabric} from 'fabric';
 import {CanvasService} from '../../canvas/canvas.service';
 import {CropZoneService} from '../crop/crop-zone.service';
 import {HistoryToolService} from '../../history/history-tool.service';
@@ -18,6 +19,8 @@ type ValidFormats = 'png'|'jpeg'|'json'|'mp4';
 
 @Injectable()
 export class ExportToolService {
+    public isSavingVideo = false;
+
     constructor(
         private canvas: CanvasService,
         private cropzone: CropZoneService,
@@ -73,56 +76,46 @@ export class ExportToolService {
 
     private getCanvasVideo(): Promise<Blob> {
         return new Promise(resolve => {
-            
-            console.log("getCanvasVideo");
+            this.isSavingVideo = true;
+            var objects = this.canvas.state.fabric.getObjects();
+            var duration = 0;
+            for (var i = 0; i < objects.length; i ++) {
+                if (objects [i].type != "video")    continue;
 
+                const videoE: HTMLVideoElement = objects [i]["getElement"]();
+                videoE.pause();
+                videoE.currentTime = 0;
+                videoE.play();
+                if (duration < videoE.duration) duration = videoE.duration;
+            }
+
+            var frameRate = 24.0;
+            
             var videoWriter = new WebMWriter({
                 quality: 0.95,    // WebM image quality from 0.0 (worst) to 1.0 (best)
                 fd: null,         // Node.js file descriptor to write to instead of buffering to memory (optional)
             
-                // You must supply one of:
-                frameDuration: 3, // Duration of frames in milliseconds
-                frameRate: 5,     // Number of frames per second
+                frameDuration: 1000 / frameRate, // Duration of frames in milliseconds
+                frameRate: frameRate,     // Number of frames per second
             });
-
             
             const render = () => {
                 if (videoWriter) {
-                    requestAnimationFrame(render);
                     videoWriter.addFrame(this.canvas.state.fabric);
                 }
             }
             
             render();
+            var timer = setInterval(render, 1000 / frameRate);
 
             setTimeout(() => {
-                console.log("timeout complete");
-                videoWriter.complete().then(function(webMBlob) {
+                videoWriter.complete().then((webMBlob) => {
                     videoWriter = null;
+                    clearInterval(timer);
+                    this.isSavingVideo = false;
                     resolve(webMBlob);
                 });
-            }, 5000);
-            /*var capturer = new CCapture( {
-                format: 'webm',
-                framerate: 60,
-                verbose: true} );
-            
-            capturer.start();
-
-            function render(){
-                requestAnimationFrame(render);
-                capturer.capture( this.canvas );
-            }
-            
-            render();
-
-            setTimeout(() => {
-                console.log("timeout complete");
-                capturer.stop();
-                capturer.save( function( blob ) {
-                    resolve();
-                } );
-            }, 5000);*/
+            }, duration * 1000);
         });
     }
 

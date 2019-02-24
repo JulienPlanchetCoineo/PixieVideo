@@ -153,6 +153,7 @@ export class CanvasService {
 
                 const object = new fabric.Image(image);
                 object.name = ObjectNames.image.name;
+                object.type = "image";
 
                 // use either main image or canvas dimensions as outter boundaries for scaling new image
                 const maxWidth  = this.state.original.width,
@@ -206,7 +207,6 @@ export class CanvasService {
                 videoE.appendChild(source);
                 return videoE;
             }
-            var canvas = new fabric.Canvas('c');
             
             var $this = this;
             var videoE = getVideoElement(url);
@@ -225,6 +225,7 @@ export class CanvasService {
 
 //              const object = new fabric.Image(image);
                 object.name = ObjectNames.image.name;
+                object.type = "video";
 
                 // use either main image or canvas dimensions as outter boundaries for scaling new image
                 const maxWidth  = this.state.original.width,

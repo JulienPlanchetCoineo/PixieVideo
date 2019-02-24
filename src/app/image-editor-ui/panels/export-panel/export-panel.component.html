@@ -16,5 +16,6 @@
         <mat-slider formControlName="quality" id="quality" min="0.1" max="1" step="0.1" required></mat-slider>
     </div>
 
-    <button mat-raised-button color="accent" class="save-button" trans>Save</button>
+    <button mat-raised-button color="accent" class="save-button" trans *ngIf="!exportTool.isSavingVideo">Save</button>
+    <label *ngIf="exportTool.isSavingVideo">Saving now... Please wait.</label>
 </form>
