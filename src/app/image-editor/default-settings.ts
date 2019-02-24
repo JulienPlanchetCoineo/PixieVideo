@@ -173,7 +173,6 @@ export const DEFAULT_CONFIG: PixieConfig  = {
                 {name: 'corners', icon: 'rounded-corner-custom', action: DrawerName.CORNERS},
                 {name: 'background', icon: 'background-custom', action: DrawerName.BACKGROUND},
                 {name: 'merge', icon: 'merge-custom', action: DrawerName.MERGE},
-                {name: 'video', icon: 'videocam', action: DrawerName.VIDEO},
             ]
         },
         openImageDialog: {
