@@ -38,6 +38,11 @@
         <mat-icon svgIcon="opacity-custom"></mat-icon>
         <div class="bottom-label" trans>Opacity</div>
     </div>
+
+    <div class="button-with-image" (click)="openPanel('animation')">
+        <mat-icon svgIcon="videocam"></mat-icon>
+        <div class="bottom-label" trans>Animation</div>
+    </div>
 </div>
 
 <ng-container [ngSwitch]="activePanel$ | async">

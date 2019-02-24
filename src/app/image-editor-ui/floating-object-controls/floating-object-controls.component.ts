@@ -65,8 +65,4 @@ export class FloatingObjectControlsComponent {
         this.activeObject.bringToFront();
         this.objects.syncObjects();
     }
-
-    public openAnimationPanel() {
-        this.store.dispatch(new OpenPanel(DrawerName.OBJECT_ANIMATIONS));
-    }
 }
