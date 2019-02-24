@@ -39,7 +39,6 @@ import {EditorState} from './state/editor-state';
 import {FilterState} from '../image-editor-ui/state/filter/filter.state';
 import {ResizeState} from '../image-editor-ui/state/resize/resize.state';
 import {CropState} from '../image-editor-ui/state/crop/crop.state';
-import {VideoState} from '../image-editor-ui/state/video/video.state';
 import {TransformState} from '../image-editor-ui/state/transform/transform.state';
 import {DrawState} from '../image-editor-ui/state/draw/draw.state';
 import {ShapesState} from '../image-editor-ui/state/shapes/shapes.state';
@@ -79,7 +78,6 @@ export function init_app(settings, mergedConfig) {
             FilterState,
             ResizeState,
             CropState,
-            VideoState,
             TransformState,
             DrawState,
             ShapesState,

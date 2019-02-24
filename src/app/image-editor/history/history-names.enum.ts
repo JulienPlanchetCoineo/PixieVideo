@@ -13,7 +13,7 @@ export class HistoryNames {
     static BACKGROUND = {name: 'Changed: background', icon: 'background-custom'};
     static BG_IMAGE = {name: 'Changed: background Image', icon: 'photo-library'};
     static OVERLAY_IMAGE = {name: 'Added: overlay Image', icon: 'photo-library'};
-    static BG_VIDEO = {name: 'Changed: background VIDEO', icon: 'videocam'};
+//    static BG_VIDEO = {name: 'Changed: background VIDEO', icon: 'videocam'};
     static OVERLAY_VIDEO = {name: 'Added: overlay Video', icon: 'videocam'};
     static INITIAL = {name: 'Initial', icon: 'home'};
     static LOADED_STATE = {name: 'Loaded: state', icon: 'history'};

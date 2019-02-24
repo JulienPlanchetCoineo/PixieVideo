@@ -84,11 +84,11 @@ export class ToolbarComponent implements AfterViewInit {
     /**
      * Ask user to upload a new background image and override current one.
      */
-    public openBackgroundVideo() {
-        this.importTool.openUploadDialog({type: 'video', backgroundImage: true}).then(() => {
-            this.history.add(HistoryNames.BG_VIDEO);
-        });
-    }
+    // public openBackgroundVideo() {
+    //     this.importTool.openUploadDialog({type: 'video', backgroundImage: true}).then(() => {
+    //         this.history.add(HistoryNames.BG_VIDEO);
+    //     });
+    // }
 
     /**
      * Ask user to upload a new overlay image and add it to canvas.

@@ -21,7 +21,7 @@ export class ExportPanelComponent implements OnInit {
 
     constructor(
         private config: Settings,
-        private exportTool: ExportToolService,
+        public exportTool: ExportToolService,
     ) {}
 
     ngOnInit() {
