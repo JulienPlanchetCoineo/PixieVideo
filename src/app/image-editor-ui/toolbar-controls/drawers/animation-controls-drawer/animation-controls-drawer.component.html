@@ -1,6 +1,23 @@
+<div class="content">
+    <div class="input-container">
+        <label for="type" trans>Type</label>
+        <select name="type" id="type" [(ngModel)]="animSetting.type">
+            <option value="{{animType}}" *ngFor="let animType of AnimTypes">{{animType}}</option>
+        </select>
+    </div>
+    <div class="input-container">
+        <label for="value" trans>Value</label>
+        <input type="number" id="value" [(ngModel)]="animSetting.value">
+    </div>
+    <div class="input-container">
+        <label for="duration" trans>Duration (ms)</label>
+        <input type="number" id="duration" min="1" [(ngModel)]="animSetting.duration">
+    </div>
+</div>
+
 <div class="animation button-with-image"
      *ngFor="let animation of defaultAnimation; index as index;"
-     (click)="fillWithPattern(index)">
-    <div class="bg-image" [style.background-image]="getAnimationBgStyle(index)"></div>
+     (click)="setAnimation(index)">
+    <img class="anim-image" [src]="getAnimationUrl(index)"/>
     <label>{{ animation }}</label>
 </div>

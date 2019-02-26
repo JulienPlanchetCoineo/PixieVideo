@@ -1,15 +1,22 @@
 animation-controls-drawer {
+  .content {
+    margin-right: 1em;
+
+    & .input-container {
+      margin-right: 1em;
+      width: 7em;
+    }
+  }
   .animation {
     margin: 0 5px;
 
     &:first-of-type {
       margin-left: 0;
     }
-    & .bg-image {
-      background-repeat: no-repeat;
+    & .anim-image {
+      width: 100%;
     }
     & label {
-      margin-top: -15px;
       display: block;
     }
   }
