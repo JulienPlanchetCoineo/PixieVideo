@@ -73,7 +73,7 @@ export class AnimationControlsDrawerComponent {
         this.isAnimating = true;
         
         this.activeObject.form.get('animation').patchValue({
-            easing: fabric.util.ease[this.defaultAnimation [index]]
+            easing: this.defaultAnimation [index]
         });
         const animation = this.activeObject.form.get('animation').value;
 
@@ -92,7 +92,7 @@ export class AnimationControlsDrawerComponent {
                     }
                 });
             },
-            easing: animation.easing
+            easing: fabric.util.ease[animation.easing]
         });
     }
     
