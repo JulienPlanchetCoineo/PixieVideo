@@ -20,6 +20,12 @@ export class ActiveObjectForm {
             fontStyle: [],
             fontFamily: [],
             fontWeight: [],
+            animation: fb.group({
+                property: [],
+                by: [],
+                duration: [],
+                easing: []
+            })
         });
     }
 }

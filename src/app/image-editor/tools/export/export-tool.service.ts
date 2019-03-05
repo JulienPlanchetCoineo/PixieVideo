@@ -49,7 +49,7 @@ export class ExportToolService {
 
         if (format === 'json') {
             data = this.getJsonState();
-        } if (format === 'mp4') {
+        } else if (format === 'mp4') {
             this.getCanvasVideo().then(blob => {
                 saveAs(blob, filename);
             });

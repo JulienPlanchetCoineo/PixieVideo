@@ -18,6 +18,8 @@ animation-controls-drawer {
     }
     & label {
       display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

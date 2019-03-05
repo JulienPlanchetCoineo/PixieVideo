@@ -13,8 +13,8 @@ import {MarkAsDirty} from '../../../state/background/background.actions';
     selector: 'animation-controls-drawer',
     templateUrl: './animation-controls-drawer.component.html',
     styleUrls: ['./animation-controls-drawer.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimationControlsDrawerComponent {
     public defaultAnimation = [
@@ -50,14 +50,9 @@ export class AnimationControlsDrawerComponent {
         'easeInOutBounce',
     ];
 
-    public animSetting = {
-        type: "left",
-        value: 0,
-        duration: 1000
-    };
+    public AnimProperties = ["left", "top"];
 
-    public AnimTypes = ["left", "top"];
-
+    public isAnimating = false;
 
     constructor(
         private canvas: CanvasService,
@@ -74,30 +69,30 @@ export class AnimationControlsDrawerComponent {
     }
 
     public setAnimation(index: number) {
-        var oldValue = this.activeObject.get()[this.animSetting.type];
-        this.activeObject.get().animate(this.animSetting.type, oldValue + this.animSetting.value, {
-            duration: this.animSetting.duration,
+        if (this.isAnimating) return;
+        this.isAnimating = true;
+        
+        this.activeObject.form.get('animation').patchValue({
+            easing: fabric.util.ease[this.defaultAnimation [index]]
+        });
+        const animation = this.activeObject.form.get('animation').value;
+
+        const activeObject = this.activeObject.get();
+        const oldValue = activeObject[animation.property];
+
+        activeObject.animate(animation.property, oldValue + animation.by, {
+            duration: animation.duration,
             onChange: this.canvas.render.bind(this.canvas),
             onComplete: () => {
-                this.activeObject.get().animate(this.animSetting.type, oldValue, {
+                activeObject.animate(animation.property, oldValue, {
                     duration: 1,
                     onChange: this.canvas.render.bind(this.canvas),
                     onComplete: () => {
-                        this.store.dispatch(new MarkAsDirty());
+                        this.isAnimating = false;
                     }
                 });
-//                this.activeObject.get().
-//                this.activeObject.move(<'top'|'right'|'bottom'|'left'>this.animSetting.type, - this.animSetting.value);
-//                this.canvas.render();
             },
-            easing: fabric.util.ease[this.defaultAnimation [index]]
+            easing: animation.easing
         });
-//        this.fillTool.withPattern(this.getAnimationUrl(index));
-    }
-
-    public applyChanges() {
-        // if (this.store.selectSnapshot(ResizeState.dirty)) {
-        //     this.store.dispatch(new ApplyChanges(DrawerName.RESIZE));
-        // }
     }
 }

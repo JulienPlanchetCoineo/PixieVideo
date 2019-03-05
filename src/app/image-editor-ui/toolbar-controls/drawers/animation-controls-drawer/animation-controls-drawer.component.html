@@ -1,17 +1,17 @@
 <div class="content">
     <div class="input-container">
-        <label for="type" trans>Type</label>
-        <select name="type" id="type" [(ngModel)]="animSetting.type">
-            <option value="{{animType}}" *ngFor="let animType of AnimTypes">{{animType}}</option>
+        <label for="property" trans>Property</label>
+        <select id="property" [formControl]="activeObject.form.get('animation.property')">
+            <option value="{{animProperty}}" *ngFor="let animProperty of AnimProperties">{{animProperty}}</option>
         </select>
     </div>
     <div class="input-container">
-        <label for="value" trans>Value</label>
-        <input type="number" id="value" [(ngModel)]="animSetting.value">
+        <label for="by" trans>By</label>
+        <input type="number" id="by" [formControl]="activeObject.form.get('animation.by')">
     </div>
     <div class="input-container">
         <label for="duration" trans>Duration (ms)</label>
-        <input type="number" id="duration" min="1" [(ngModel)]="animSetting.duration">
+        <input type="number" min="1" [formControl]="activeObject.form.get('animation.duration')">
     </div>
 </div>
 

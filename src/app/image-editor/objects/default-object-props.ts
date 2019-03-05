@@ -1,3 +1,5 @@
+import {fabric} from 'fabric';
+
 export const defaultObjectProps = {
     fill: 'rgb(30, 139, 195)',
     opacity: 1,
@@ -16,4 +18,10 @@ export const defaultObjectProps = {
     fontStyle: 'normal',
     fontFamily: 'Times New Roman',
     fontWeight: 400,
+    animation: {
+        property: "left",
+        by: 0,
+        duration: 1000,
+        easing: fabric.util.ease.easeInSine
+    }
 };

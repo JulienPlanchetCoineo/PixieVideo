@@ -1,4 +1,4 @@
-import {IObjectOptions, IText, ITextOptions, Object, Shadow} from 'fabric/fabric-impl';
+import {IObjectOptions, IText, ITextOptions, Object, Shadow, IAnimationOptions} from 'fabric/fabric-impl';
 import {defaultObjectProps} from '../objects/default-object-props';
 
 export function getFabricObjectProps(obj: Object) {
@@ -31,6 +31,12 @@ export function getFabricObjectProps(obj: Object) {
         props.fontFamily = text.fontFamily;
         props.fontWeight = text.fontWeight;
     }
+
+    props.animation = {} as IAnimationOptions;
+    props.animation.property = obj.animation.property;
+    props.animation.by = obj.animation.by;
+    props.animation.duration = obj.animation.duration;
+    props.animation.easing = obj.animation.easing;
 
     return props;
 }

@@ -364,6 +364,7 @@ interface IObjectAnimation<T> {
 	animate(properties: any, options?: IAnimationOptions): Object;
 }
 interface IAnimationOptions {
+	property?: string;
 	/**
 	 * Allows to specify starting value of animatable property (if we don't want current value to be used).
 	 */
@@ -2252,6 +2253,7 @@ export interface IObjectOptions {
 	 * Not used by fabric, just for convenience
 	 */
 	data?: any;
+	animation?: IAnimationOptions;
 }
 export interface Object extends IObservable<Object>, IObjectOptions, IObjectAnimation<Object> {}
 export class Object {
