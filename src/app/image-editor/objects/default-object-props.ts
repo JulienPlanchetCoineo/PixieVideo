@@ -22,6 +22,6 @@ export const defaultObjectProps = {
         property: "left",
         by: 0,
         duration: 1000,
-        easing: fabric.util.ease.easeInSine
+        easing: "easeInSine"
     }
 };

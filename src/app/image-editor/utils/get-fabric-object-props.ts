@@ -1,7 +1,8 @@
-import {IObjectOptions, IText, ITextOptions, Object, Shadow, IAnimationOptions} from 'fabric/fabric-impl';
+import {fabric} from 'fabric';
+import {IObjectOptions, IText, ITextOptions, Object as fabricObject, Shadow, IAnimationOptions} from 'fabric/fabric-impl';
 import {defaultObjectProps} from '../objects/default-object-props';
 
-export function getFabricObjectProps(obj: Object) {
+export function getFabricObjectProps(obj: fabricObject) {
     if ( ! obj) return {};
     const shadow = obj.shadow as Shadow;
 
@@ -36,7 +37,7 @@ export function getFabricObjectProps(obj: Object) {
     props.animation.property = obj.animation.property;
     props.animation.by = obj.animation.by;
     props.animation.duration = obj.animation.duration;
-    props.animation.easing = obj.animation.easing;
+    props.animation.easing = obj.animation.easing || fabric.util.ease[defaultObjectProps.animation.easing];
 
     return props;
 }
