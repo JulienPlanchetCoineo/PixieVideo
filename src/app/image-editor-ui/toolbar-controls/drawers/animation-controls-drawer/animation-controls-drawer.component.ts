@@ -95,15 +95,4 @@ export class AnimationControlsDrawerComponent {
             easing: fabric.util.ease[animation.easing]
         });
     }
-    
-    public applyChanges() {
-        console.log("AAAAAAAAAAAAAA", "Apply");
-        // if (this.store.selectSnapshot(ResizeState.dirty)) {
-        //     this.store.dispatch(new ApplyChanges(DrawerName.RESIZE));
-        // }
-    }
-
-    public cancelChanges() {
-        console.log("AAAAAAAAAAAAAA", "Cancel");
-    }
 }
