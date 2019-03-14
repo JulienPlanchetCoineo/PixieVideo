@@ -202,6 +202,7 @@ export class CanvasService {
                 videoE.muted = true;
                 videoE.crossOrigin = "anonymous";
                 videoE.loop = true;
+                videoE.src = url;
                 var source = document.createElement('source');
                 source.src = url;
                 source.type = 'video/mp4';
@@ -226,7 +227,8 @@ export class CanvasService {
 
 //              const object = new fabric.Image(image);
                 object.name = ObjectNames.image.name;
-                object.type = "video";
+                object.type = "image";
+                object.name = "video";
                 object.file = file.native;
 
                 // use either main image or canvas dimensions as outter boundaries for scaling new image
