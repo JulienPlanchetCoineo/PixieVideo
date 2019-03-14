@@ -44,4 +44,4 @@ testem.log
 Thumbs.db
 
 
-!node_modules/fabric/dist/fabric.js
+!/node_modules/fabric/dist/fabric.js
