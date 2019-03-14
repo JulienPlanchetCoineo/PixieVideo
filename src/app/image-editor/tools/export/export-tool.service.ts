@@ -182,14 +182,15 @@ export class ExportToolService {
     }
 
     public serverSideRender() {
-        let objects = this.canvas.fabric().getObjects("video");
-        if (objects.length > 0) {
-            let object: fabric.Image = <fabric.Image>objects [0];
-            console.log(object.file);
+        let objects = this.canvas.fabric().getObjects("image");
+        for (var i = 0; i < objects.length; i ++) {
+            const objectItem = objects [i];
+
+            if (objectItem.name != "video") continue;
+
+            let object: fabric.Image = <fabric.Image>objectItem;
 
             let { file } = object;
-
-            console.log("process.env.AWS_BUCKETNAME", process.env);
 
             const bucketName = environment.AWS_BUCKETNAME;
             const accessKey = environment.AWS_ACCESSKEY;
