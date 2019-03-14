@@ -39,6 +39,9 @@
 </pixie-editor>
 
 <script>
+    if (global === undefined) {
+        var global = window;
+    }
     var i = setInterval(function() {
        if (window['Pixie'] == null) return;
 

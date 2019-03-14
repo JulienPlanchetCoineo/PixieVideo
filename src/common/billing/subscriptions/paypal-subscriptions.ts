@@ -110,7 +110,7 @@ export class PaypalSubscriptions {
 
         const interval = setInterval(() => {
             if (newWindow == null || newWindow.closed) {
-                window.clearInterval(interval);
+                clearInterval(interval);
 
                 if (this.subscriptionPending && ! this.executingAgreement) {
                     this.rejectSubscriptionPromise();

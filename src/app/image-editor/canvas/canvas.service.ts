@@ -13,6 +13,7 @@ import {Store} from '@ngxs/store';
 import {ContentLoaded} from '../state/editor-state-actions';
 import {ObjectNames} from '../objects/object-names.enum';
 import {normalizeObjectProps} from '../utils/normalize-object-props';
+import { UploadedFile } from 'common/uploads/uploaded-file';
 
 @Injectable()
 export class CanvasService {
@@ -194,7 +195,7 @@ export class CanvasService {
     /**
      * Open image at given url in canvas.
      */
-    public openVideo(url): Promise<Image> {
+    public openVideo(url: string, file: UploadedFile): Promise<Image> {
         return new Promise(resolve => {
             const getVideoElement = (url) => {
                 var videoE = document.createElement('video');
@@ -226,6 +227,7 @@ export class CanvasService {
 //              const object = new fabric.Image(image);
                 object.name = ObjectNames.image.name;
                 object.type = "video";
+                object.file = file.native;
 
                 // use either main image or canvas dimensions as outter boundaries for scaling new image
                 const maxWidth  = this.state.original.width,

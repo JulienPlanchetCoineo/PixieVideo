@@ -27,6 +27,7 @@
     "@ngxs/logger-plugin": "^3.3.2",
     "@ngxs/schematics": "0.0.1-alpha.5",
     "@ngxs/store": "^3.3.2",
+    "aws-sdk": "^2.419.0",
     "b64-to-blob": "^1.2.19",
     "copy-to-clipboard": "^3.0.8",
     "core-js": "^2.6.2",

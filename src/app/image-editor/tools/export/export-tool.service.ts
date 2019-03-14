@@ -15,7 +15,10 @@ import {ucFirst} from '../../../../common/core/utils/uc-first';
 //import CCapture from 'ccapture.js/build/CCapture.all.min.js';
 import WebMWriter from 'webm-writer';
 
-type ValidFormats = 'png'|'jpeg'|'json'|'mp4';
+import * as AWS from 'aws-sdk/global';
+import * as S3 from 'aws-sdk/clients/s3';
+
+type ValidFormats = 'png'|'jpeg'|'json'|'mp4'|'svr';
 
 @Injectable()
 export class ExportToolService {
@@ -47,15 +50,21 @@ export class ExportToolService {
 
         this.applyWaterMark();
 
-        if (format === 'json') {
-            data = this.getJsonState();
-        } else if (format === 'mp4') {
-            this.getCanvasVideo().then(blob => {
-                saveAs(blob, filename);
-            });
-            return;
-        } else {
-            data = this.getDataUrl(format, quality);
+        switch (format) {
+            case 'json':
+                data = this.getJsonState();
+                break;
+            case 'mp4':
+                this.getCanvasVideo().then(blob => {
+                    saveAs(blob, filename);
+                });
+                return;
+            case 'svr':
+                this.serverSideRender();
+                break;
+            default:
+                data = this.getDataUrl(format, quality);
+                break;
         }
 
         this.watermark.remove();
@@ -168,6 +177,38 @@ export class ExportToolService {
 
         if (watermark) {
             this.watermark.add(watermark);
+        }
+    }
+
+    public serverSideRender() {
+        let objects = this.canvas.fabric().getObjects("video");
+        if (objects.length > 0) {
+            let object: fabric.Image = <fabric.Image>objects [0];
+            console.log(object.file);
+
+            let { file } = object;
+
+            const bucketName = "simpletest1234567890";
+            const accessKey = "AKIAJULA2SE2F6GDS4MQ";
+            const secretKey = "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";
+
+            const bucket = new S3(
+                {
+                  accessKeyId: accessKey,
+                  secretAccessKey: secretKey,
+                }
+              );
+               
+              const params = {
+                Bucket: bucketName,
+                Key: file.name,
+                Body: file
+              };
+               
+              bucket.upload(params, function (err, data) {
+                  console.log("err", err);
+                  console.log("data", data);
+              });
         }
     }
 }

@@ -37,7 +37,7 @@ export class ImportToolService {
                     if (options.backgroundImage && file.extension !== 'json') {
                         this.openBackgroundImage(file.data).then(obj => resolve(obj));
                     } else {
-                        this.openFile(file.data, file.extension).then(obj => resolve(obj));
+                        this.openFile(file.data, file.extension, files[0]).then(obj => resolve(obj));
                     }
                 }, () => {});
             });
@@ -98,14 +98,14 @@ export class ImportToolService {
     /**
      * Open specified data or image element in editor.
      */
-    public openFile(data: string|HTMLImageElement, extension: string = 'png'): Promise<Image|void> {
+    public openFile(data: string|HTMLImageElement, extension: string = 'png', file: UploadedFile = null): Promise<Image|void> {
         if (data instanceof HTMLImageElement) data = data.src;
 
         if (extension === 'json') {
             return this.openStateFile(data);
         } else if (extension === 'mp4'
                 || extension === 'ogv') {
-            return this.canvas.openVideo(data);
+            return this.canvas.openVideo(data, file);
         } else {
             return this.canvas.openImage(data);
         }

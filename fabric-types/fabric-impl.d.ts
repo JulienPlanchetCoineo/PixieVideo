@@ -1769,7 +1769,9 @@ interface IImageOptions extends IObjectOptions {
      * Image crop in pixels from original image size.
      * since 2.0.0
      */
-    cropY?: number;
+	cropY?: number;
+	
+	file?: File;
 }
 interface Image extends Object, IImageOptions {}
 export class Image {
