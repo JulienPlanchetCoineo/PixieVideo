@@ -17,6 +17,7 @@ import WebMWriter from 'webm-writer';
 
 import * as AWS from 'aws-sdk/global';
 import * as S3 from 'aws-sdk/clients/s3';
+import environment from '../../../../environment';
 
 type ValidFormats = 'png'|'jpeg'|'json'|'mp4'|'svr';
 
@@ -188,9 +189,11 @@ export class ExportToolService {
 
             let { file } = object;
 
-            const bucketName = "simpletest1234567890";
-            const accessKey = "AKIAJULA2SE2F6GDS4MQ";
-            const secretKey = "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";
+            console.log("process.env.AWS_BUCKETNAME", process.env);
+
+            const bucketName = environment.AWS_BUCKETNAME;
+            const accessKey = environment.AWS_ACCESSKEY;
+            const secretKey = environment.AWS_SECRETKEY;
 
             const bucket = new S3(
                 {
