@@ -27,7 +27,35 @@ export class CanvasService {
         public activeObject: ActiveObjectService,
         private config: Settings,
         private store: Store,
-    ) {}
+    ) {
+        var fromObject = fabric.Image.fromObject;
+
+        fabric.Image.fromObject = (_object, callback) => {
+            if (_object.name == "video") {
+                var object = fabric.util.object.clone(_object);
+                var videoE = document.createElement('video');
+                videoE.muted = true;
+                videoE.crossOrigin = "anonymous";
+                videoE.loop = true;
+                videoE.src = object.src;
+                var source = document.createElement('source');
+                source.src = object.src;
+                source.type = 'video/mp4';
+                videoE.appendChild(source);
+                
+                videoE.addEventListener("loadedmetadata", e => {
+                    videoE.width = videoE.videoWidth;
+                    videoE.height = videoE.videoHeight;
+                    videoE.play();
+                    
+                    var image = new fabric.Image(<HTMLImageElement><unknown>videoE, object);
+                    callback(image);
+                });
+            }
+            else
+                fromObject(_object, callback);
+        }
+    }
 
     public render() {
         this.state.fabric.requestRenderAll();
